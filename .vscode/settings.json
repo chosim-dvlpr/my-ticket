@@ -1,5 +1,7 @@
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "prettier.singleQuote": true,
+  "prettier.semi": false
 }
