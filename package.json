@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "manage-ticket",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/chosim-dvlpr/manage-ticket.git",
+  "author": "bmj0053 <bmj05378@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
+}
