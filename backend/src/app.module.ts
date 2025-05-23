@@ -4,9 +4,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { Event } from './entities/event.entity'
+import { EventModule } from './modules/event.module'
 
 @Module({
   imports: [
+    EventModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
