@@ -11,6 +11,10 @@ export class Event {
   @Column({ type: 'date' })
   start_date: string
 
+  @ApiProperty({ description: '이벤트 종료 날짜' })
+  @Column({ type: 'date' })
+  end_date: string
+
   @ApiProperty({ description: '이벤트 이름' })
   @Column({ length: 255 })
   event_name: string
@@ -18,10 +22,6 @@ export class Event {
   @ApiProperty({ description: '포스터 이미지 URL', required: false })
   @Column({ length: 255, nullable: true })
   poster_url?: string
-
-  @ApiProperty({ description: '이벤트 종료 날짜' })
-  @Column({ type: 'date' })
-  end_date: string
 
   @ApiProperty({ description: '이벤트 장소' })
   @Column({ length: 25 })
