@@ -1,6 +1,7 @@
-import { getEvents } from '@/api/events/route'
-import { Event } from '@/types/event'
-import { EventList } from '@/components/events/EventList'
+import { Event } from '@type/event.type'
+import { getEvents } from '@api/events/route'
+import { EventList } from '@components/events/EventList'
+import Header from '@components/common/Header'
 
 export const metadata = {
   title: '공연 관리',
@@ -12,7 +13,7 @@ export default async function Events() {
 
   return (
     <div>
-      <h1>공연 관리</h1>
+      <Header title="공연 관리" />
       <EventList events={events} />
     </div>
   )

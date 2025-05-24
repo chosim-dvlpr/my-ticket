@@ -1,4 +1,4 @@
-import { Event } from '@/types/event'
+import { Event } from '@type/event.type'
 
 interface EventListProps {
   events: Event[]
