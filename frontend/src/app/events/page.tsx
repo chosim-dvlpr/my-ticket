@@ -1,18 +1,19 @@
-'use client'
+import { getEvents } from '@/api/events/route'
+import { Event } from '@/types/event'
+import { EventList } from '@/components/events/EventList'
 
-import { useGetEvents } from '@/hooks/fetch/useGetEvents'
+export const metadata = {
+  title: '공연 관리',
+  description: '등록된 공연 리스트',
+}
 
-export default function Events() {
-  const { events, isLoading, error } = useGetEvents()
+export default async function Events() {
+  const events = await getEvents<Event[]>()
 
   return (
     <div>
-      <h1>Events</h1>
-      <ul>
-        {events.map((event) => (
-          <li key={event.id}>{event.event_name}</li>
-        ))}
-      </ul>
+      <h1>공연 관리</h1>
+      <EventList events={events} />
     </div>
   )
 }
