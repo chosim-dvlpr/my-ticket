@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sm: {
+    font-size: 12px;
+    line-height: 12px;
+  };
+  --font-md: {
+    font-size: 14px;
+    line-height: 22px;
+  };
+  --font-mlg: {
+    font-size: 18px;
+    line-height: 26px;
+  };
+  --font-lg: {
+    font-size: 20px;
+    line-height: 30px;
+  };
+  --font-xl: {
+    font-size: 32px;
+    line-height: 48px;
+  };
+
+  --color-grey-50: #f8f9fa;
+  --color-grey-100: #f1f3f5;
+  --color-grey-200: #e9ecef;
+  --color-grey-300: #dee2e6;
+  --color-grey-400: #ced4da;
+  --color-grey-500: #adb5bd;
+  --color-grey-600: #6c757d;
+  --color-grey-700: #495057;
+  --color-grey-800: #343a40;
+  --color-grey-900: #212529;
+}
