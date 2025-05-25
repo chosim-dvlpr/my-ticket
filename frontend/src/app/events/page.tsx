@@ -1,6 +1,6 @@
 import { Event } from '@type/event.type'
 import { getEvents } from '@api/events/route'
-import { EventList } from '@components/events/EventList'
+import EventList from '@components/events/EventList'
 import Header from '@components/common/Header'
 
 export const metadata = {

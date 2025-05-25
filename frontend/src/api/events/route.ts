@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { BASE_URL } from '@/constants/api'
+import { BASE_URL } from '@constants/api'
 
 export async function getEvents<T>(): Promise<T> {
   try {
