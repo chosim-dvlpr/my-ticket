@@ -43,7 +43,24 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            ./deploy.sh
+            set -e
+
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            
+            nvm use 22.16.0
+
+            cd ~/my-ticket/backend
+
+            git pull origin main
+
+            yarn cache clean
+            yarn install --frozen-lockfile
+
+            yarn build
+
+            pm2 restart ecosystem.config.js
+
 
       - name: Remove Github Actions IP from security group
         run: |
