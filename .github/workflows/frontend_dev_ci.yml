@@ -11,6 +11,8 @@ concurrency:
 jobs:
   FE_CI:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
     permissions:
       contents: read
     defaults:
@@ -35,6 +37,4 @@ jobs:
         run: yarn lint
 
       - name: Run build
-        run: |
-          env NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
-          yarn build
+        run: yarn build
