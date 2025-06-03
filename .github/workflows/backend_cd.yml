@@ -1,11 +1,9 @@
 name: Backend CD 🚀
 
 on:
-  pull_request:
-    types: [synchronize]
-    # types: [merge]
-    # branches:
-    #   - dev
+  push:
+    branches:
+      - main
 
 jobs:
   DEPLOY:
