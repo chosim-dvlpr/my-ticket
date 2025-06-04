@@ -3,16 +3,24 @@ name: Backend CI 🎟️
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-    paths:
-      - 'backend/**'
-    paths-ignore:
-      - 'frontend/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
+  CHECK-CHANGES:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
   CI:
     runs-on: ubuntu-latest
     permissions:
