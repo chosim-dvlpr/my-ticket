@@ -12,8 +12,6 @@ concurrency:
 
 jobs:
   CI:
-    needs: check-changes
-    if: ${{ needs.check-changes.outputs.frontend == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
