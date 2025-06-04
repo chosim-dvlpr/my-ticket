@@ -41,7 +41,8 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            cd $GITHUB_WORKSPACE/backend
+            cd ~/my-ticket/backend
+            chmod +x deploy.sh
             ./deploy.sh
 
       - name: Remove Github Actions IP from security group
