@@ -3,7 +3,7 @@ name: Backend CD 🚀
 on:
   push:
     branches:
-      - main
+      - feature/#4
 
 jobs:
   DEPLOY:
@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-            cd $GITHUB_WORKSPACE/backend
+            cd ~/my-ticket/backend
             ./deploy.sh
 
       - name: Remove Github Actions IP from security group
