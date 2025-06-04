@@ -12,7 +12,7 @@ git pull origin main
 
 yarn cache clean
 yarn install --frozen-lockfile
-
+yarn test
 yarn build
 
 pm2 restart ecosystem.config.js
