@@ -1,15 +1,17 @@
-name: Backend Dev CI 🎟️
+name: Backend CI 🎟️
 
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+    paths:
+      - 'backend/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
-  BE_CI:
+  CI:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -22,8 +24,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
