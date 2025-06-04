@@ -5,6 +5,8 @@ on:
     types: [opened, reopened, synchronize]
     paths:
       - 'frontend/**'
+    paths-ignore:
+      - 'backend/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
