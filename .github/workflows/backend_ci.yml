@@ -1,29 +1,29 @@
-name: Frontend Dev CI 🎫
+name: Backend CI 🎟️
 
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+    paths:
+      - 'frontend/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
-  FE_CI:
+  CI:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
     permissions:
       contents: read
+      packages: write
+      actions: write
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: ./backend
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
