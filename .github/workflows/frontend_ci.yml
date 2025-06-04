@@ -3,17 +3,28 @@ name: Frontend CI 🎫
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-    paths:
-      - 'frontend/**'
-    paths-ignore:
-      - 'backend/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
+  CHECK-CHANGES:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+
   CI:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.frontend == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
