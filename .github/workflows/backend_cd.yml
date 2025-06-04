@@ -3,7 +3,7 @@ name: Backend CD 🚀
 on:
   push:
     branches:
-      - feature/#4
+      - main
 
 jobs:
   DEPLOY:
