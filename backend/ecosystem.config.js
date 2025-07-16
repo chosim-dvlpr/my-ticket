@@ -8,6 +8,7 @@ module.exports = {
       max_memory_restart: '1G',
       env: {
         NODE_ENV: 'production',
+        FRONTEND_URL: 'https://www.ticketalarm.site/',
       },
     },
   ],

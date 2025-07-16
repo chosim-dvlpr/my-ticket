@@ -24,6 +24,8 @@
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@lib/*": ["src/lib/*"],
+      "@services/*": ["src/services/*"],
       "@styles/*": ["src/styles/*"],
       "@type/*": ["src/type/*"]
     }
