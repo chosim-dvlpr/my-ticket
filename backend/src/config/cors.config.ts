@@ -9,6 +9,10 @@ const getAllowedOrigins = (): string[] => {
     origins.push(process.env.VERCEL_URL)
   }
 
+  if (process.env.VERCEL_PREVIEW_URL) {
+    origins.push(process.env.VERCEL_PREVIEW_URL)
+  }
+
   return [...new Set(origins)].filter((origin) => origin.length > 0)
 }
 

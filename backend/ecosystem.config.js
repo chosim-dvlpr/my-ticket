@@ -10,6 +10,7 @@ module.exports = {
         NODE_ENV: 'production',
         FRONTEND_URL: 'https://www.ticketalarm.site/',
         VERCEL_URL: 'https://my-ticket-frontend-teal.vercel.app',
+        VERCEL_PREVIEW_URL: 'https://my-ticket-frontend-git-*.vercel.app',
       },
     },
   ],
