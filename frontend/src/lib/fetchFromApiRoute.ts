@@ -1,9 +1,7 @@
-import { headers } from 'next/headers'
-
 async function getServerBaseUrl(): Promise<string> {
-  const headersList = await headers()
-  const host = headersList.get('host') || 'localhost:3000'
-  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+  const isProduction = process.env.NODE_ENV === 'production'
+  const host = isProduction ? process.env.NEXT_PUBLIC_CLIENT_URL : 'localhost:3000'
+  const protocol = isProduction ? 'https' : 'http'
   return `${protocol}://${host}`
 }
 
