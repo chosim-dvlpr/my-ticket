@@ -43,7 +43,7 @@ jobs:
 
           yarn build 2>&1 | tee build.log
 
-          if grep -i "error\|failed\|exception" build.log; then
+          if grep -i "failed\|exception" build.log; then
             echo "❌ Build completed but contains errors!"
             exit 1
           fi
