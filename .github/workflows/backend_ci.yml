@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     paths:
-      - 'frontend/**'
+      - 'backend/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
