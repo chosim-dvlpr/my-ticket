@@ -31,10 +31,29 @@ jobs:
           node-version-file: './frontend/.nvmrc'
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Run lint
         run: yarn lint
 
-      - name: Run build
-        run: yarn build
+      - name: Run build with strict error handling
+        run: |
+          set -e
+
+          yarn build 2>&1 | tee build.log
+
+          if grep -i "error\|failed\|exception" build.log; then
+            echo "❌ Build completed but contains errors!"
+            exit 1
+          fi
+
+          if grep -E "(TypeError|ReferenceError|SyntaxError)" build.log; then
+            echo "❌ JavaScript errors detected during build!"
+            exit 1
+          fi
+
+          echo "✅ Build completed successfully without errors!"
+
+      - name: Clean up build logs
+        if: always()
+        run: rm -f build.log
