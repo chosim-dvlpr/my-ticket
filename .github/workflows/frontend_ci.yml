@@ -17,6 +17,7 @@ jobs:
       contents: read
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_CLIENT_URL: ${{ secrets.NEXT_PUBLIC_CLIENT_URL }}
     defaults:
       run:
         working-directory: ./frontend
