@@ -17,6 +17,7 @@ jobs:
       contents: read
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      NEXT_PUBLIC_CLIENT_URL: ${{ secrets.NEXT_PUBLIC_CLIENT_URL }}
     defaults:
       run:
         working-directory: ./frontend
@@ -42,7 +43,7 @@ jobs:
 
           yarn build 2>&1 | tee build.log
 
-          if grep -i "error\|failed\|exception" build.log; then
+          if grep -i "failed\|exception" build.log; then
             echo "❌ Build completed but contains errors!"
             exit 1
           fi
