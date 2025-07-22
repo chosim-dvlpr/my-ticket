@@ -1,15 +1,19 @@
-async function getServerBaseUrl(): Promise<string> {
-  const isProduction = process.env.NODE_ENV === 'production'
-  const host = isProduction ? process.env.NEXT_PUBLIC_CLIENT_URL : 'localhost:3000'
-  const protocol = isProduction ? 'https' : 'http'
-  return `${protocol}://${host}`
+function getServerBaseUrl(): string {
+  if (process.env.NODE_ENV === 'production') {
+    const host = process.env.NEXT_PUBLIC_CLIENT_URL
+    if (!host) {
+      throw new Error('NEXT_PUBLIC_CLIENT_URL is not defined in production environment.')
+    }
+    return host
+  }
+  return 'http://localhost:3000'
 }
 
 export async function fetchFromApiRoute<T>(endpoint: string, options?: RequestInit): Promise<T | null> {
-  try {
-    const baseUrl = await getServerBaseUrl()
-    const url = `${baseUrl}${endpoint}`
+  const baseUrl = getServerBaseUrl()
+  const url = `${baseUrl}${endpoint}`
 
+  try {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -20,13 +24,15 @@ export async function fetchFromApiRoute<T>(endpoint: string, options?: RequestIn
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to API Route: ${response.status} ${response.statusText}`)
+      const errorText = await response.text()
+      throw new Error(`API Route request failed with status ${response.status}: ${errorText}`)
     }
 
     const result = await response.json()
-    return result.data || result
+
+    return result.data
   } catch (error) {
-    console.error('Failed to API Route:', error)
+    console.error(`Failed to fetch from API route: ${url}`, error)
     return null
   }
 }
