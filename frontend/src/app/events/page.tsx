@@ -1,6 +1,5 @@
 import { Event } from '@type/event.type'
 import EventList from '@components/events/EventList'
-import Header from '@components/common/Header'
 import { fetchFromApiRoute } from '@lib/fetchFromApiRoute'
 
 export const metadata = {
@@ -12,8 +11,7 @@ export default async function Events() {
   const events = await fetchFromApiRoute<Event[]>('/api/events')
 
   return (
-    <div>
-      <Header title="공연 관리" />
+    <>
       {events && events.length > 0 ? (
         <EventList events={events} />
       ) : (
@@ -22,6 +20,6 @@ export default async function Events() {
           <p className="text-sm">등록된 공연이 없거나 데이터를 불러오는 중 오류가 발생했습니다.</p>
         </div>
       )}
-    </div>
+    </>
   )
 }

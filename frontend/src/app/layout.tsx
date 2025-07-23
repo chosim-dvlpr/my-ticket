@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+
 import '@styles/globals.css'
+import Header from '@components/common/Header'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,7 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* 폰트 지정 */}
-      <body>{children}</body>
+      <body>
+        <Header title="공연 관리" />
+        {children}
+      </body>
     </html>
   )
 }
