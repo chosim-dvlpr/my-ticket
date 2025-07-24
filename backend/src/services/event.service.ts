@@ -26,7 +26,7 @@ export class EventService {
 
   // 특정 ID의 이벤트 조회
   // 주어진 ID에 해당하는 Event 엔티티를 반환 (없으면 예외 발생)
-  async findOne(id: number): Promise<Event> {
+  async findOne(id: string): Promise<Event> {
     return await this.eventRepository.findOneOrFail({ where: { id } })
   }
 }

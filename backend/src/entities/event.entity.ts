@@ -4,8 +4,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 @Entity('event')
 export class Event {
   @ApiProperty({ description: '이벤트 ID' })
-  @PrimaryGeneratedColumn('increment')
-  id: number
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: string
 
   @ApiProperty({ description: '이벤트 시작 날짜' })
   @Column({ type: 'date' })
