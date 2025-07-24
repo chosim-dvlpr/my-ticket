@@ -19,6 +19,7 @@ export default function EventList({ events }: EventListProps) {
                   src={event.poster_url}
                   alt={event.event_name}
                   className="object-cover"
+                  unoptimized // TODO: 외부 이미지에 대한 개선 필요
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
