@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* 폰트 지정 */}
-      <body>
+      <body className="max-w-100 m-auto">
         <Header title="공연 관리" />
         {children}
       </body>
