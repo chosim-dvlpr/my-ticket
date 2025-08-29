@@ -1,11 +1,23 @@
-const getAllowedOrigins = (): string[] => {
-  const origins = ['http://localhost:3000', process.env.LOCAL_HOST]
+const getAllowedOrigins = (): (string | RegExp)[] => {
+  const origins: (string | RegExp)[] = ['http://localhost:3000']
 
   if (process.env.FRONTEND_URL) {
     origins.push(process.env.FRONTEND_URL)
   }
 
-  return [...new Set(origins)].filter((origin) => origin.length > 0)
+  if (process.env.LOCAL_HOST) {
+    origins.push(process.env.LOCAL_HOST)
+  }
+
+  if (process.env.VERCEL_ORIGIN_REGEX) {
+    try {
+      origins.push(new RegExp(process.env.VERCEL_ORIGIN_REGEX))
+    } catch (e) {
+      console.error('Invalid VERCEL_ORIGIN_REGEX:', process.env.VERCEL_ORIGIN_REGEX)
+    }
+  }
+
+  return [...new Set(origins)].filter((origin) => origin.toString().length > 0)
 }
 
 export const corsConfig = {
