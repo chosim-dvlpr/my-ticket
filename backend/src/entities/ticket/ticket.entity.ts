@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'
-import { Event } from '@entities/event/event.entity'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity('ticket')
 export class Ticket {
@@ -8,9 +7,9 @@ export class Ticket {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: string
 
-  @ManyToOne(() => Event)
-  @JoinColumn({ name: 'event_id' })
-  event: Event
+  @ApiProperty({ description: '이벤트 ID' })
+  @Column({ type: 'bigint' })
+  event_id: string
 
   @ApiProperty({ description: '좌석 정보' })
   @Column({ length: 100 })

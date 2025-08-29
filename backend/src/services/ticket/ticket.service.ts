@@ -12,15 +12,17 @@ export class TicketService {
   ) {}
 
   async create(createTicketDto: CreateTicketDto): Promise<Ticket> {
-    const ticket = this.ticketRepository.create(createTicketDto)
+    const ticket = this.ticketRepository.create({ ...createTicketDto, event_id: createTicketDto.event_id })
     return await this.ticketRepository.save(ticket)
   }
 
   async findAll(): Promise<Ticket[]> {
-    return await this.ticketRepository.find()
+    return await this.ticketRepository.find({
+      relations: ['event'],
+    })
   }
 
   async findOne(id: string): Promise<Ticket> {
-    return await this.ticketRepository.findOneOrFail({ where: { id } })
+    return await this.ticketRepository.findOneOrFail({ where: { id }, relations: ['event'] })
   }
 }
