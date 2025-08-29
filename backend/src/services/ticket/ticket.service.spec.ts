@@ -4,18 +4,9 @@ import { Repository } from 'typeorm'
 import { Ticket } from '@entities/ticket/ticket.entity'
 import { TicketService } from '@services/ticket/ticket.service'
 
-const mockEvent = {
-  id: '1',
-  start_date: '2025-09-01',
-  end_date: '2025-09-01',
-  event_name: 'Concert',
-  place: 'Stadium',
-  road_address: '123 Teheran-ro',
-}
-
 const mockTicket = {
   id: '1',
-  event: mockEvent,
+  event_id: '1',
   seat_label: 'A1',
   ticketing_date: '2025-08-01',
   get_notification: true,
@@ -42,6 +33,7 @@ describe('TicketService', () => {
     mockTicketRepository.findOneOrFail.mockResolvedValue(mockTicket)
     mockTicketRepository.save.mockResolvedValue(mockTicket)
     mockTicketRepository.create.mockReturnValue(mockTicket)
+    mockTicketRepository.delete.mockResolvedValue({ affected: 1 })
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -61,26 +53,10 @@ describe('TicketService', () => {
     expect(service).toBeDefined()
   })
 
-  describe('findAll', () => {
-    it('should return an array of tickets', async () => {
-      const result = await service.findAll()
-      expect(result).toEqual([mockTicket])
-      expect(repo.find).toHaveBeenCalled()
-    })
-  })
-
-  describe('findOne', () => {
-    it('should return a single ticket', async () => {
-      const result = await service.findOne(mockTicket.id)
-      expect(result).toEqual(mockTicket)
-      expect(repo.findOneOrFail).toHaveBeenCalledWith({ where: { id: mockTicket.id } })
-    })
-  })
-
   describe('create', () => {
     it('should create and return a ticket', async () => {
       const createDto = {
-        event: mockEvent,
+        event_id: '1',
         seat_label: 'B1',
         ticketing_date: '2025-08-01',
         get_notification: true,
@@ -90,11 +66,32 @@ describe('TicketService', () => {
       mockTicketRepository.create.mockReturnValue(createdTicket)
       mockTicketRepository.save.mockResolvedValue(createdTicket)
 
-      const result = await service.create(createDto)
+      const result = await service.create(createDto.event_id, createDto)
 
       expect(repo.create).toHaveBeenCalledWith(createDto)
       expect(repo.save).toHaveBeenCalledWith(createdTicket)
       expect(result).toEqual(createdTicket)
+    })
+  })
+
+  describe('getTicketsByEvent', () => {
+    it('should return tickets for the event', async () => {
+      const result = await service.getTicketsByEvent('1')
+
+      expect(repo.find).toHaveBeenCalledWith({ where: { event_id: '1' } })
+      expect(result).toEqual([mockTicket])
+    })
+  })
+
+  describe('delete', () => {
+    it('should delete the ticket successfully', async () => {
+      await expect(service.delete('1', '1')).resolves.toBeUndefined()
+      expect(repo.delete).toHaveBeenCalledWith({ id: '1', event_id: '1' })
+    })
+
+    it('should throw an error if ticket does not exist', async () => {
+      mockTicketRepository.delete.mockResolvedValueOnce({ affected: 0 })
+      await expect(service.delete('1', '999')).rejects.toThrow('Ticket not found or does not belong to the event')
     })
   })
 })
