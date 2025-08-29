@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Ticket } from '@entities/ticket.entity'
-import { TicketService } from '@services/ticket.service'
+import { Ticket } from '@entities/ticket/ticket.entity'
+import { TicketService } from '@services/ticket/ticket.service'
 
 const mockEvent = {
   id: '1',
