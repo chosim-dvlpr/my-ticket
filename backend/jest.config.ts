@@ -7,7 +7,7 @@ module.exports = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: 'src',
   testRegex: '.*\\.spec\\.ts$',
-  collectCoverageFrom: ['**/*.(t|j)s'],
+  collectCoverageFrom: ['**/*.(t|j)s', '!**/*.spec.ts', '!**/node_modules/**', '!**/dist/**'],
   coverageDirectory: '../coverage',
   moduleNameMapper: {
     '^@src/(.*)$': '<rootDir>/$1',
