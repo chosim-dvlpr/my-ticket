@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common'
-import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common'
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { CreateTicketDto } from '@src/dto/ticket/ticket.dto'
 import { Ticket } from '@src/entities/ticket/ticket.entity'
 import { TicketService } from '@services/ticket/ticket.service'
 
-@Controller('tickets')
+@Controller('events/:event_id/tickets')
 @ApiTags('tickets')
 export class TicketController {
   // private : 클래스 내부에서만 접근 가능하도록 제한
@@ -14,21 +14,17 @@ export class TicketController {
   @Post()
   @ApiOperation({ summary: '티켓 생성', description: '새로운 티켓을 생성한다.' })
   @ApiCreatedResponse({ description: '티켓을 생성한다.', type: Ticket })
-  create(@Body() createTicketDto: CreateTicketDto): Promise<Ticket> {
-    return this.ticketService.create(createTicketDto)
+  create(@Param('event_id') event_id: string, @Body() createTicketDto: CreateTicketDto): Promise<Ticket> {
+    return this.ticketService.create(event_id, createTicketDto)
   }
 
   @Get()
-  @ApiOperation({ summary: '모든 티켓 조회', description: '모든 티켓을 조회한다.' })
-  @ApiOkResponse({ description: '모든 티켓을 조회한다.', type: [Ticket] })
-  findAll(): Promise<Ticket[]> {
-    return this.ticketService.findAll()
+  getTickets(@Param('event_id') event_id: string) {
+    return this.ticketService.getTicketsByEvent(event_id)
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: '특정 티켓 조회', description: '특정 티켓을 조회한다.' })
-  @ApiOkResponse({ description: '특정 티켓을 조회한다.', type: Ticket })
-  findOne(@Param('id') id: string): Promise<Ticket> {
-    return this.ticketService.findOne(id)
+  @Delete(':ticket_id')
+  deleteTicket(@Param('event_id') event_id: string, @Param('ticket_id') ticket_id: string) {
+    return this.ticketService.delete(event_id, ticket_id)
   }
 }

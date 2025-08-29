@@ -1,15 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { PartialType } from '@nestjs/swagger'
+import { ApiProperty, PartialType } from '@nestjs/swagger'
 import { IsString, IsBoolean, IsDateString } from 'class-validator'
 
 export class CreateTicketDto {
-  @ApiProperty({
-    description: '이벤트 ID',
-    example: '1',
-  })
-  @IsString()
-  event_id: string
-
   @ApiProperty({
     description: '좌석 정보',
     example: 'Floor 1구역 5번',

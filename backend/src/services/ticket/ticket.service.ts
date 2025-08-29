@@ -8,21 +8,22 @@ import { Repository } from 'typeorm'
 export class TicketService {
   constructor(
     @InjectRepository(Ticket)
-    private ticketRepository: Repository<Ticket>,
+    private readonly ticketRepository: Repository<Ticket>,
   ) {}
 
-  async create(createTicketDto: CreateTicketDto): Promise<Ticket> {
-    const ticket = this.ticketRepository.create({ ...createTicketDto, event_id: createTicketDto.event_id })
-    return await this.ticketRepository.save(ticket)
+  async create(event_id: string, dto: CreateTicketDto): Promise<Ticket> {
+    const ticket = this.ticketRepository.create({ ...dto, event_id })
+    return this.ticketRepository.save(ticket)
   }
 
-  async findAll(): Promise<Ticket[]> {
-    return await this.ticketRepository.find({
-      relations: ['event'],
-    })
+  async getTicketsByEvent(event_id: string): Promise<Ticket[]> {
+    return this.ticketRepository.find({ where: { event_id } })
   }
 
-  async findOne(id: string): Promise<Ticket> {
-    return await this.ticketRepository.findOneOrFail({ where: { id }, relations: ['event'] })
+  async delete(event_id: string, ticket_id: string): Promise<void> {
+    const result = await this.ticketRepository.delete({ id: ticket_id, event_id })
+    if (result.affected === 0) {
+      throw new Error('Ticket not found or does not belong to the event')
+    }
   }
 }
