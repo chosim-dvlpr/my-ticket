@@ -5,10 +5,15 @@ import { Event } from '@entities/event/event.entity'
 import { EventModule } from '@modules/event/event.module'
 import { AppController } from '@src/app.controller'
 import { AppService } from '@src/app.service'
+import { TicketModule } from './modules/ticket/ticket.module'
+import { Ticket } from './entities/ticket/ticket.entity'
+
+const modules = [EventModule, TicketModule]
+const entities = [Event, Ticket]
 
 @Module({
   imports: [
-    EventModule,
+    ...modules,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -22,8 +27,9 @@ import { AppService } from '@src/app.service'
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Event],
+        entities: [...entities],
         synchronize: true,
+        logging: process.env.NODE_ENV === 'development',
       }),
     }),
   ],
