@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { getEvent } from '@api/event/route'
 import { Event } from '@type/event.type'
+import { getEvent } from 'src/app/apis/event/event'
 
 export const useEvent = (eventId: string) => {
   const [event, setEvent] = useState<Event | null>(null)
