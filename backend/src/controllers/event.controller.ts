@@ -13,7 +13,7 @@ export class EventController {
 
   @Post()
   @ApiOperation({ summary: '이벤트 생성', description: '새로운 이벤트를 생성한다.' })
-  @ApiCreatedResponse({ description: '이벤트를 생성한다다.', type: Event })
+  @ApiCreatedResponse({ description: '이벤트를 생성한다.', type: Event })
   create(@Body() createEventDto: CreateEventDto): Promise<Event> {
     return this.eventService.create(createEventDto)
   }
@@ -29,6 +29,6 @@ export class EventController {
   @ApiOperation({ summary: '특정 이벤트 조회', description: '특정 이벤트를 조회한다.' })
   @ApiOkResponse({ description: '특정 이벤트를 조회한다.', type: Event })
   findOne(@Param('id') id: string): Promise<Event> {
-    return this.eventService.findOne(+id)
+    return this.eventService.findOne(id)
   }
 }
