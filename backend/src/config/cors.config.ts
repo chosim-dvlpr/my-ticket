@@ -1,5 +1,5 @@
 const getAllowedOrigins = (): string[] => {
-  const origins = ['http://localhost:3000']
+  const origins = ['http://localhost:3000', process.env.LOCAL_HOST]
 
   if (process.env.FRONTEND_URL) {
     origins.push(process.env.FRONTEND_URL)
