@@ -2,8 +2,12 @@
 
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
+import { Info, MapPin, SquareArrowOutUpRight } from 'lucide-react'
+import Link from 'next/link'
 
 import { useEvent } from '@hooks/fetch/useEvent'
+import Chip from '@components/common/Chip'
+import { MAP } from '@constants/externalUrl'
 
 export default function EventDetailPage() {
   const { eventId } = useParams<{ eventId: string }>()
@@ -14,7 +18,7 @@ export default function EventDetailPage() {
   if (!event) return <div>이벤트가 없습니다.</div>
 
   return (
-    <div>
+    <div className="overflow-hidden">
       {/* Event Card */}
       <div className="border-2 border-gray-100 rounded-xl overflow-hidden mt-4">
         <div className="overflow-hidden w-full">
@@ -38,7 +42,20 @@ export default function EventDetailPage() {
           <div className="text-gray-400">{event.place}</div>
         </div>
       </div>
-      {/* chip */}
+
+      {/* Chip */}
+      <div className="flex flex-row gap-4 mt-4 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+        {event.md_info_url && (
+          <Link href={event.md_info_url}>
+            <Chip content="MD 정보" icon={<Info width={24} height={24} />} variant="gray" />
+          </Link>
+        )}
+        <a href={MAP(event.road_address)}>
+          <Chip content="공연장 정보" icon={<MapPin width={24} height={24} />} variant="gray" />
+        </a>
+        {/* TODO:" 티켓 예매 페이지 연결" */}
+        <Chip content="티켓 예매 페이지" icon={<SquareArrowOutUpRight width={24} height={24} />} variant="gray" />
+      </div>
       {/* Tickets */}
     </div>
   )
