@@ -6,12 +6,16 @@ import { Info, MapPin, SquareArrowOutUpRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { useEvent } from '@hooks/fetch/useEvent'
+import { useTickets } from '@hooks/fetch/useTickets'
 import Chip from '@components/common/Chip'
 import { MAP } from '@constants/externalUrl'
+import Ticket from '@components/tickets/Ticket'
+import { Carousel } from '@components/common/Carousel'
 
 export default function EventDetailPage() {
   const { eventId } = useParams<{ eventId: string }>()
   const { event, isLoading, error } = useEvent(eventId)
+  const { tickets } = useTickets(eventId)
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
@@ -56,7 +60,18 @@ export default function EventDetailPage() {
         {/* TODO:" 티켓 예매 페이지 연결" */}
         <Chip content="티켓 예매 페이지" icon={<SquareArrowOutUpRight width={24} height={24} />} variant="gray" />
       </div>
+
       {/* Tickets */}
+      <Carousel totalItems={tickets.length}>
+        <Carousel.Content>
+          {tickets.map((ticket) => (
+            <Carousel.Item key={ticket.id}>
+              <Ticket ticket={ticket} event={event} />
+            </Carousel.Item>
+          ))}
+        </Carousel.Content>
+        <Carousel.Indicators />
+      </Carousel>
     </div>
   )
 }
