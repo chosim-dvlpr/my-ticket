@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common'
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
-import { CreateTicketDto } from '@src/dto/ticket/ticket.dto'
-import { Ticket } from '@src/entities/ticket/ticket.entity'
-import { TicketService } from '@services/ticket/ticket.service'
+import { CreateTicketDto } from '@src/modules/ticket/dto/ticket.dto'
+import { Ticket } from '@src/modules/ticket/entities/ticket.entity'
+import { TicketService } from '@src/modules/ticket/ticket.service'
 
 @Controller('events/:event_id/tickets')
 @ApiTags('tickets')

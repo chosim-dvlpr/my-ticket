@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Ticket } from '@entities/ticket/ticket.entity'
-import { TicketService } from '@services/ticket/ticket.service'
+import { Ticket } from '@src/modules/ticket/entities/ticket.entity'
+import { TicketService } from './ticket.service'
 
 const mockTicket = {
   id: '1',
@@ -55,20 +55,23 @@ describe('TicketService', () => {
 
   describe('create', () => {
     it('should create and return a ticket', async () => {
-      const createDto = {
+      const baseDto = {
         event_id: '1',
         seat_label: 'B1',
         ticketing_date: '2025-08-01',
         get_notification: true,
       }
+
+      const inputDto = { ...baseDto, event_schedule_id: '1' }
+
       const createdTicket = { ...mockTicket, seat_label: 'B1' }
 
       mockTicketRepository.create.mockReturnValue(createdTicket)
       mockTicketRepository.save.mockResolvedValue(createdTicket)
 
-      const result = await service.create(createDto.event_id, createDto)
+      const result = await service.create(baseDto.event_id, inputDto)
 
-      expect(repo.create).toHaveBeenCalledWith(createDto)
+      expect(repo.create).toHaveBeenCalledWith(expect.objectContaining(inputDto))
       expect(repo.save).toHaveBeenCalledWith(createdTicket)
       expect(result).toEqual(createdTicket)
     })
@@ -78,7 +81,10 @@ describe('TicketService', () => {
     it('should return tickets for the event', async () => {
       const result = await service.getTicketsByEvent('1')
 
-      expect(repo.find).toHaveBeenCalledWith({ where: { event_id: '1' } })
+      expect(repo.find).toHaveBeenCalledWith({
+        where: { event_id: '1' },
+        relations: ['eventSchedule'],
+      })
       expect(result).toEqual([mockTicket])
     })
   })
