@@ -17,7 +17,10 @@ export class TicketService {
   }
 
   async getTicketsByEvent(event_id: string): Promise<Ticket[]> {
-    return this.ticketRepository.find({ where: { event_id } })
+    return this.ticketRepository.find({
+      where: { event_id },
+      relations: ['eventSchedule'],
+    })
   }
 
   async delete(event_id: string, ticket_id: string): Promise<void> {

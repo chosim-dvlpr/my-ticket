@@ -7,9 +7,10 @@ import { AppController } from '@src/app.controller'
 import { AppService } from '@src/app.service'
 import { TicketModule } from './modules/ticket/ticket.module'
 import { Ticket } from './entities/ticket/ticket.entity'
+import { EventSchedule } from './entities/event-schedule/event-schedule.entity'
 
 const modules = [EventModule, TicketModule]
-const entities = [Event, Ticket]
+const entities = [Event, Ticket, EventSchedule]
 
 @Module({
   imports: [

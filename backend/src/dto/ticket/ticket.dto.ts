@@ -3,6 +3,13 @@ import { IsString, IsBoolean, IsDateString } from 'class-validator'
 
 export class CreateTicketDto {
   @ApiProperty({
+    description: '이벤트 스케줄 ID',
+    example: '1',
+  })
+  @IsString()
+  event_schedule_id: string
+
+  @ApiProperty({
     description: '좌석 정보',
     example: 'Floor 1구역 5번',
   })
