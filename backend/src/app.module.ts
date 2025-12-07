@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-import { Event } from './entities/event.entity'
-import { EventModule } from './modules/event.module'
+import { Event } from '@entities/event/event.entity'
+import { EventModule } from '@modules/event/event.module'
+import { AppController } from '@src/app.controller'
+import { AppService } from '@src/app.service'
+import { TicketModule } from './modules/ticket/ticket.module'
+import { Ticket } from './entities/ticket/ticket.entity'
+import { EventSchedule } from './entities/event-schedule/event-schedule.entity'
+
+const modules = [EventModule, TicketModule]
+const entities = [Event, Ticket, EventSchedule]
 
 @Module({
   imports: [
-    EventModule,
+    ...modules,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -22,8 +28,9 @@ import { EventModule } from './modules/event.module'
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
-        entities: [Event],
+        entities: [...entities],
         synchronize: true,
+        logging: process.env.NODE_ENV === 'development',
       }),
     }),
   ],
