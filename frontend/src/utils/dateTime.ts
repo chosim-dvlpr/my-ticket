@@ -5,3 +5,13 @@ export const calculateDday = (startDate: string): number => {
 
   return dday < 0 ? 0 : dday
 }
+
+export const formatDateTime = (dateTime: string): string => {
+  return new Date(dateTime).toLocaleString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
