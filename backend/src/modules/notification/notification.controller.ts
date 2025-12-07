@@ -1,6 +1,7 @@
 import { Controller, Post, Delete, Body, Param } from '@nestjs/common'
-import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger'
-import { NotificationService } from '@src/services/notification/notification.service'
+import { ApiTags, ApiOperation } from '@nestjs/swagger'
+import { NotificationService } from '@src/modules/notification/notification.service'
+import { CreateNotificationDto } from './dto/notification.dto'
 
 @ApiTags('Notification (알림)')
 @Controller('notifications')
@@ -9,9 +10,8 @@ export class NotificationController {
 
   @Post()
   @ApiOperation({ summary: '티켓 알림 신청' })
-  @ApiBody({ schema: { example: { ticketId: '1', email: 'user@example.com' } } })
-  async create(@Body() body: { ticketId: string; email: string }) {
-    return this.notificationService.createNotification(body.ticketId, body.email)
+  async create(@Body() dto: CreateNotificationDto) {
+    return this.notificationService.createNotification(dto)
   }
 
   @Delete(':ticketId')

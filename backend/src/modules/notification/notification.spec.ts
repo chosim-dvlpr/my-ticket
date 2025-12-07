@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { MailerService } from '@nestjs-modules/mailer'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { NotFoundException, BadRequestException } from '@nestjs/common'
-import { NotificationRequest } from '@src/entities/notification-request/notification-request.entity'
-import { Ticket } from '@src/entities/ticket/ticket.entity'
+import { NotificationRequest } from '@src/modules/notification/entities/notification-request.entity'
+import { Ticket } from '@src/modules/ticket/entities/ticket.entity'
 import { NotificationService } from './notification.service'
 
 const mockMailerService = {
@@ -62,7 +62,7 @@ describe('NotificationService', () => {
       mockRepository.save.mockResolvedValue({ id: 1 })
 
       // When
-      await service.createNotification(ticketId, email)
+      await service.createNotification({ ticketId, email })
 
       // Then
       expect(mockRepository.save).toHaveBeenCalledTimes(1)
@@ -74,7 +74,7 @@ describe('NotificationService', () => {
       mockRepository.findOne.mockResolvedValueOnce(null)
 
       // When & Then
-      await expect(service.createNotification(ticketId, email)).rejects.toThrow(NotFoundException)
+      await expect(service.createNotification({ ticketId, email })).rejects.toThrow(NotFoundException)
     })
 
     it('실패: 이미 알림을 신청했다면 BadRequestException을 던져야 한다', async () => {
@@ -82,7 +82,7 @@ describe('NotificationService', () => {
       mockRepository.findOne.mockResolvedValueOnce({ id: ticketId }).mockResolvedValueOnce({ id: 1, email })
 
       // When & Then
-      await expect(service.createNotification(ticketId, email)).rejects.toThrow(BadRequestException)
+      await expect(service.createNotification({ ticketId, email })).rejects.toThrow(BadRequestException)
     })
   })
 

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, Entity, JoinColumn, PrimaryGeneratedColumn, CreateDateColumn, OneToOne } from 'typeorm'
-import { Ticket } from '../ticket/ticket.entity'
+import { Ticket } from '../../ticket/entities/ticket.entity'
 
 @Entity('notification_request')
 export class NotificationRequest {

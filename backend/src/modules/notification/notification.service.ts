@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Cron } from '@nestjs/schedule'
 import { MailerService } from '@nestjs-modules/mailer'
-import { NotificationRequest } from '@entities/notification-request/notification-request.entity'
-import { Ticket } from '@entities/ticket/ticket.entity'
+import { NotificationRequest } from '@src/modules/notification/entities/notification-request.entity'
+import { Ticket } from '@src/modules/ticket/entities/ticket.entity'
+import { CreateNotificationDto } from './dto/notification.dto'
 
 @Injectable()
 export class NotificationService {
@@ -18,7 +19,8 @@ export class NotificationService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async createNotification(ticketId: string, email: string) {
+  async createNotification(dto: CreateNotificationDto) {
+    const { ticketId, email } = dto
     // 티켓 존재 확인
     const ticket = await this.ticketRepo.findOne({ where: { id: ticketId } })
     if (!ticket) throw new NotFoundException('티켓을 찾을 수 없습니다.')
